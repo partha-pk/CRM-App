@@ -1,0 +1,128 @@
+<!Doctype html>
+
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+			xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+		
+	    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+     crossorigin="anonymous">
+
+		<title>CRM</title>
+	
+</head>
+
+<body>
+
+	<div class="container">
+	
+		<h3>
+		
+		 <a th:href="@{/customer/list}"> Customer Resource Manager </a>
+		 
+		</h3>
+		
+	  	<hr>
+	
+		  
+			User: <span sec:authentication  ="name"></span>
+			<br>
+			Role(s): <span sec:authentication="principal.authorities"></span>
+			<br>
+			<br>
+		
+	
+			<div class="container">
+			
+			<form th:action="@{/customer/search}" 
+						  method="Get">
+						  
+			<a th:href="@{/customer/showform}" class="btn btn-info btn-sm mb-3"> 
+			Add Customer
+			</a>
+			
+			<p>
+			Search customer: <input  type="text"  
+						name="searchname" placeholder="customer Name" />
+			
+			<input type="submit" value="search" class="add-button" />
+			
+			</p>	
+			</form>
+			
+			</div>
+			
+			<hr>
+			
+			<table class="table table-bordered table-striped " >
+			
+			<thead class="thead-dark">
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+			
+			<span sec:authorize="hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')">
+			
+				<th>
+				  	
+					Action
+					
+				</th>
+			</span> 
+				
+			 </tr>	
+			</thead>
+			
+			<tbody>
+				<tr th:each= "tempcustomer : ${customers}" >
+					
+					<td th:text="${tempcustomer.firstName}" /> 
+					<td th:text="${tempcustomer.lastName}" />
+					<td th:text="${tempcustomer.email}" />
+					
+				<span sec:authorize="hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')">
+			
+					<td> 
+					 	<span sec:authorize="hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')">
+							
+							<a th:href="@{/customer/Update(customerId=${tempcustomer.id})}" 
+							class="btn btn-info btn-sm mt-2">Update</a>
+							
+						</span>	
+						&nbsp;
+						&nbsp;
+						&nbsp; 
+						<span sec:authorize="hasRole('ROLE_ADMIN')">
+						
+							 <a th:href="@{/customer/Delete(customerId=${tempcustomer.id})}" 
+							 class="btn btn-danger btn-sm mt-2" 
+							 onclick="if (!(confirm('Are you sure?'))) return false">Delete</a>
+							 
+						</span>
+					</td>
+					
+				</span>	
+					
+				</tr>
+			</tbody>
+			
+			</table>
+		
+			<form action="#" th:action="@{/logout}" 
+				   method="POST">
+		
+			<input type="submit" value="Logout" class="btn btn-outline-primary mt-2" />
+		
+			</form>
+		
+	</div>
+	
+</body>
+
+</html>

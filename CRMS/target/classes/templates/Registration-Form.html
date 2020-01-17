@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	
+	<style type="text/css">
+		.header {
+			align-content:center;
+			color: red;
+			font-family: sans-serif;
+			font-style: normal; 
+			font-weight:bold; 	 	 	
+		}	
+	
+	 body {border:thin; border-color:aqua; border-style:ridge;
+	  		border-radius:20px; text-align:inherit; border-radius: 20px; margin-right: 400px; 
+	 		margin-left: 400px; margin-top: 50px;}
+	
+	</style>
+    
+</head>
+
+<body>
+	<div class="container">
+	
+		<h1 class="header">Customer Form</h1>
+			
+		<div class="wrapper">
+			<hr>
+			
+				<p class="h3 mb-4"> Register Here</p>	
+				
+				<form th:action="@{/customer/save}" 
+						th:object="${customer}" method="Post">
+					
+					<input type="hidden" th:field="*{id}" />
+					
+					<input type="text" th:field="*{firstName}"
+						placeholder="First Name"  class="form-control mb-4 col-8"/>
+						
+					<input type="text" th:field="*{lastName}"
+						placeholder="Last Name" class="form-control mb-4 col-8"/>
+						
+					<input type="text" th:field="*{email}"
+						placeholder="Email" class="form-control mb-4 col-8"/>
+					
+						
+					<button type="submit" class="btn btn-info col-4" >save</button>	
+					
+					<a th:href="@{/customer/list}"  class="btn btn-danger col-4" > Dashboard</a>
+		
+				</form>
+		</div>			
+			
+		<br>
+			
+	</div>
+	
+</body>
+
+</html>
